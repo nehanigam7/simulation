@@ -1,0 +1,69 @@
+#include<conio.h>
+#include<iostream.h>
+#include<graphics.h>
+#include<dos.h>
+//void arrange( int *burst,char *p);
+void main()
+{       int gdriver=DETECT,gmode;
+	int burst[5],wt[5],trt[5],poly[8];
+	int avg_wt,avg_trt,t_trt,t_wt;
+	int temp;
+	char temp1;
+	char p[5];
+	clrscr();
+	initgraph(&gdriver,&gmode,"c:\\tc\\bgi");
+	for(int i=0;i<5;i++)
+	{
+	cout<<"\nENTER THE PROCESS NAME\n";
+	cin>>p[i];
+	cout<<"\nENTER THE BURST TIME\n";
+	cin>>burst[i];
+	}
+	 t_trt=0;
+	 t_wt=0;
+for(int j=0;j<5;j++)
+		{
+		for(int k=0;k<j;k++)
+		{
+			if(burst[k]>burst[k+1])
+			{
+			 temp=burst[k];
+			 burst[k]=burst[k+1];
+			 burst[k+1]=temp;
+			 temp1=p[k];
+			 p[k]=p[k+1];
+			 p[k+1]=temp1;
+			 }
+		}
+	}
+	for(int k=0;k<5;k++)
+	{
+	cout<<burst[k]<<" ";
+	cout<<p[k]<<"\n";
+	}
+	wt[0]=0;
+	for(i=0;i<5;i++)
+	{
+	trt[i]=wt[i]+burst[i];
+	wt[i+1]=trt[i];
+	t_trt=t_trt+ trt[i];
+t_wt=t_wt+wt[i];
+	}
+	avg_wt=t_wt/5;
+	avg_trt=t_trt/5;
+	cout<<"THE AVERAGE WAITING TIME IS "<<avg_wt<<"secs";
+	cout<<"\n THE AVERAGE TURN AROUND TIME IS "<<avg_trt<<"secs";
+	clrscr();
+	//rectangle(20,50,100,20);
+	rectangle(20,50,trt[4]*10+20,100);
+	//floodfill(20,50,4);
+	for(i=0;i<5;i++)
+	{
+	setcolor(i);
+	//line((trt[i]*10)+20,50,(trt[i]*10)+20,100);
+	rectangle((wt[i]*10)+20,50,(trt[i]*10)+20,100);
+	delay(1000);
+	}
+	getch();
+	closegraph();
+}
